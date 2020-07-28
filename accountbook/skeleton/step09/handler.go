@@ -53,14 +53,14 @@ func (hs *Handlers) ListHandler(w http.ResponseWriter, r *http.Request) {
 	items, err := hs.ab.GetItems(10)
 	if err != nil {
 		// TODO: http.Errorを使って、InternalServerErrorでエラーを返す
-		http.Error(w, "aaa", http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	// TODO: 取得したitemsをテンプレートに埋め込む
 	err = listTmpl.Execute(w, items)
 	if err != nil {
-		http.Error(w, "aaaa", http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 }
