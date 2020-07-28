@@ -16,7 +16,7 @@ func main() {
 	// データベースへ接続
 	// ドライバにはSQLiteを使って、
 	// accountbook.dbというファイルでデータベース接続を行う
-	db, err := sql.Open(sqlite.DriverName, "accountbook.db")
+	db, err := sql.Open(sqlite.DriverName, "./../step07/accountbook.db")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -33,8 +33,9 @@ func main() {
 	hs := NewHandlers(ab)
 
 	// TODO: ハンドラの登録
-
+	mux := http.NewServeMux()
+	mux.Handle("/step09", http.HandlerFunc(hs.ListHandler))
 	fmt.Println("http://localhost:8080 で起動中...")
 	// HTTPサーバを起動する
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8080", mux))
 }
